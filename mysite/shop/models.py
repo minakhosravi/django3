@@ -21,6 +21,8 @@ class shop(models.Model):
     status = models.CharField(max_length=10,                              
                                 choices=STATUS_CHOICES,                              
                                 default='draft')
+    visits=models.PositiveIntegerField(default=0)
+    summary=models.TextField(default="",max_length=500)
     class Meta:        
         ordering = ('-publish',)
     def __str__(self):       

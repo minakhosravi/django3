@@ -3,7 +3,7 @@ from .models import shop
 
 @admin.register(shop)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'author', 'publish', 'status')    
+    list_display = ('title', 'slug', 'author', 'publish','visits' ,'status')    
     list_filter = ('status', 'created', 'publish', 'author')    
     search_fields = ('title', 'body')    
     prepopulated_fields = {'slug': ('title',)}    
