@@ -1,15 +1,21 @@
 {% extends "blog/base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p class="date">
-    Published {{ post.publish }} by {{ post.author }} - Visits : {{post.visits}}
+    <h1>{{ post.title }}</h1>
+    <p class="date">
+        Published {{ post.publish }} by {{ post.author }} - Visits : {{post.visits}}
+    </p>
+    <p>
+    خلاصه : 
+    <br/>
+    {{post.summary}}
+    </p>
+    <hr/>
+    {{ post.body|linebreaks }}
+    <hr>
+    <p>
+<a href="{% url "shop:post_share" post.id %}">
+Share this post
+</a>
 </p>
-<p>
-خلاصه : 
-<br/>
-{{post.summary}}
-</p>
-<hr/>
-{{ post.body|linebreaks }}
 {% endblock %}
