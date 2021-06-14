@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import shop
-from .forms import EmailPostForm
+from .models import shop, Comment
+from .forms import EmailPostForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 
@@ -32,6 +32,22 @@ def post_detail(request, year, month, day, post):
                              publish__year=year,
                              publish__month=month,
                              publish__day=day)
+
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == 'POST':
+        # A comment was posted
+        comment_form = CommentForm(data=request.POST)
+    if comment_form.is_valid():
+        # Create Comment object but don't save to database yet
+        new_comment = comment_form.save(commit=False)
+        # Assign the current post to the comment
+        new_comment.post = post
+        # Save the comment to the database
+        new_comment.save()
+    else:
+        comment_form = CommentForm()
+
     post.visits = post.visits + 1
     post.save()
     return render(request,
@@ -62,5 +78,5 @@ def post_share(request, post_id):
     else:
         form = EmailPostForm()
     return render(request, 'shop/post/share.html', {'post': post,
-                                                        'form': form,
-                                                        'sent': sent})
+                                                    'form': form,
+                                                    'sent': sent})
