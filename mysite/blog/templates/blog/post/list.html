@@ -11,6 +11,7 @@
 <p class="date">
     Published {{ post.publish }} by {{ post.author }}
 </p>
+<p class="tags">برچسب ها: {{ post.tags.all|join:", " }}</p>
 <hr>
 <h6>visits : <b><i> {{post.visits}} </i></b> </h6>
 {{ post.body|truncatewords:30|linebreaks }}

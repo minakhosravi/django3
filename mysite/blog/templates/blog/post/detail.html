@@ -5,10 +5,9 @@
     <p class="date">
         Published {{ post.publish }} by {{ post.author }} - Visits : {{post.visits}}
     </p>
-
 {% with comments.count as total_comments %}
 <h2>
-{{ total_comments }} comment{{ total_comments|pluralize }}
+تعداد نظرات{{ total_comments }} 
 </h2>
 {% endwith %}
 
@@ -25,7 +24,6 @@
 Share this post
 </a>
 </p>
-
 {% for comment in comments %}
 <div class="comment">
 <p class="info">
