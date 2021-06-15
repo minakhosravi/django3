@@ -157,7 +157,7 @@
                     {% block content %}
                         <h1>{{ post.title }}</h1>
                         <p class="date">
-                            Published {{ post.publish }} by {{ post.author }} - Visits : {{post.visits}}
+                            ارسال شده در {{ post.publish }} توسط {{ post.author }} - مشاهده : {{post.visits}}
                         </p>
                     {% with comments.count as total_comments %}
                     <h2>
@@ -174,26 +174,26 @@
                         <hr>
                         <p>
                     <a href="{% url "shop:post_share" post.id %}">
-                    Share this post
+                    این نوشته را به اشتراک بگذارید
                     </a>
                     </p>
 
                     {% for comment in comments %}
                     <div class="comment">
                     <p class="info">
-                    Comment {{ forloop.counter }} by {{ comment.name }}
+                    نظر شماره {{ forloop.counter }} توسط {{ comment.name }}
                     {{ comment.created }}
                     </p>
                     {{ comment.body|linebreaks }}
                     </div>
                     {% empty %}
-                    <p>There are no comments yet.</p>
+                    <p>نظری وجود ندارد</p>
                     {% endfor %}
 
                     {% if new_comment %}
-                    <h2>Your comment has been added.</h2>
+                    <h2>نظر شما با موفقیت ثبت شد</h2>
                     {% else %}
-                    <h2>Add a new comment</h2>
+                    <h2>ارسال نظر</h2>
                     <form method="post">
                     {{ comment_form.as_p }}
                     {% csrf_token %}

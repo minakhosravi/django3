@@ -3,10 +3,14 @@ from .models import shop, Comment
 from .forms import EmailPostForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
+from taggit.models import Tag
 
-
-def post_list(request):
+def post_list(request,tag_slug=None):
     object_list = shop.objects.filter(status='published')
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
     paginator = Paginator(object_list, 2)  # 2 posts in each page
     try:
         page = request.GET.get('page')
@@ -23,7 +27,8 @@ def post_list(request):
 
     return render(request, 'shop/post/index.html',
                   {'page': page,
-                   'posts': posts})
+                   'posts': posts,
+                   'tag': tag})
 
 
 def post_detail(request, year, month, day, post):
