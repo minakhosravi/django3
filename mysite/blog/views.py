@@ -4,6 +4,7 @@ from .forms import EmailPostForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from taggit.models import Tag
+from django.db.models import Count
 
 def post_list(request, tag_slug=None):
     object_list = Post.objects.filter(status='published')
@@ -55,12 +56,17 @@ def post_detail(request, year, month, day, post):
         comment_form = CommentForm()
     post.visits = post.visits + 1
     post.save()
+
+    
+
+
     return render(request,
                   'blog/post/detail.html',
                   {'post': post,
                    'comments': comments,
                    'new_comment': new_comment,
-                   'comment_form': comment_form})
+                   'comment_form': comment_form,
+                   })
 
 
 def post_share(request, post_id):
